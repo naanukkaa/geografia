@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>პანდემია და მოსახლეობის ცვლილება</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'BPG Glaho WEB Caps', 'Sylfaen', 'DejaVu Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f3f4 100%);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            border: none;
+            background: none;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #2c5aa0;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #495057;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a:hover {
+            color: #2c5aa0;
+            background: rgba(44, 90, 160, 0.1);
+            transform: translateY(-2px);
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        nav a:hover::before {
+            left: 100%;
+        }
+
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #2c5aa0 0%, #4a90e2 100%);
+            color: white;
+            margin-bottom: 3rem;
+            border-radius: 15px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            padding: 2rem 0;
+        }
+
+        .section h2 {
+            color: #2c5aa0;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #2c5aa0, #4a90e2);
+            border-radius: 2px;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            border-left: 4px solid #4a90e2;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .card h3 {
+            color: #2c5aa0;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .stat-card:hover {
+            border-color: #4a90e2;
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c5aa0;
+            display: block;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1a365d 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: linear-gradient(135deg, #ffffff 0%, #f1f3f4 100%);
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+                width: 100%;
+                text-align: center;
+                padding: 1rem 0;
+            }
+
+            nav a {
+                display: block;
+                padding: 1rem;
+                border-bottom: 1px solid rgba(44, 90, 160, 0.1);
+            }
+
+            nav a:last-child {
+                border-bottom: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">პანდემია და მოსახლეობა</div>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav id="nav">
+                    <ul>
+                        <li><a href="#main">მთავარი</a></li>
+                        <li><a href="#intro">შესავალი</a></li>
+                        <li><a href="#population">მოსახლეობა</a></li>
+                        <li><a href="#age-structure">ასაკობრივი სტრუქტურა</a></li>
+                        <li><a href="#economy">ეკონომიკა</a></li>
+                        <li><a href="#vaccination">ვაქცინაცია</a></li>
+                        <li><a href="#malthus">მალთუსის თეორია</a></li>
+                        <li><a href="#conclusion">დასკვნა</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section id="main" class="hero">
+                <h1>პანდემია და მოსახლეობის ცვლილება</h1>
+                <p>COVID-19 პანდემიის გავლენის კვლევა მსოფლიო მოსახლეობის დემოგრაფიულ ცვლილებებზე</p>
+            </section>
+
+            <section id="intro" class="section fade-in">
+                <h2>შესავალი</h2>
+                <div class="card">
+                    <p>2020 წლის 11 მარტს ჯანდაცვის მსოფლიო ორგანიზაციამ COVID‑19 პანდემიად გამოაცხადა. მისი გავლენა მსოფლიო მოსახლეობასა და ეკონომიკაზე უზარმაზარი აღმოჩნდა. პანდემიის შედეგად შეიცვალა ადამიანთა ცხოვრების წესი, სამუშაო პირობები, დასაქმების ფორმები და დემოგრაფიული სტრუქტურაც კი.</p>
+                    <p>ამ თემაში განვიხილავთ, როგორ იმოქმედა პანდემიამ მოსახლეობის რაოდენობაზე, ასაკობრივ‑სქესობრივ შემადგენლობაზე, ეკონომიკაზე, და რა როლი ითამაშა ვაქცინაციამ სიტუაციის სტაბილიზაციაში. ასევე გავაანალიზებთ მალთუსის თეორიას და მის შესაბამისობას თანამედროვე რეალობასთან.</p>
+                </div>
+            </section>
+
+            <section id="population" class="section fade-in">
+                <h2>მოსახლეობის რაოდენობა და ბუნებრივი მატება</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">73,904</span>
+                        <div class="stat-label">დაბადებები 2000 წელს</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">96,003</span>
+                        <div class="stat-label">გარდაცვალება 2000 წელს</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">უარყოფითი</span>
+                        <div class="stat-label">ბუნებრივი მატება</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <p>პანდემიის დაწყების შემდეგ მსოფლიოს მოსახლეობის ზრდის ტემპი შენელდა. განსაკუთრებით მაღალი სიკვდილიანობა დაფიქსირდა ხანდაზმულ ასაკობრივ ჯგუფებში, რადგან COVID‑19‑ით დაავადების მძიმე შემთხვევები სწორედ ამ ასაკში იყო ხშირი.</p>
+                    <p>ბევრ განვითარებულ ქვეყანაში, როგორიცაა იტალია, გერმანია და იაპონია, ბუნებრივი მატება უარყოფითი გახდა. ეს ტენდენცია განსაკუთრებით თვალშისაცემია, რადგან ზოგიერთ ქვეყანაში სიკვდილიანობამ შობადობას მნიშვნელოვნად გადააჭარბა.</p>
+                    <p>სამუშაო რვეულში მოცემული მონაცემებით, 2000 წელს დაბადებები იყო 73 904, ხოლო გარდაცვალება — 96 003. ამ მონაცემით ჩანს, რომ გარდაცვლილთა რაოდენობა აღემატებოდა ახალშობილთა რიცხვს, რაც ნიშნავს უარყოფით ბუნებრივ მატებას.</p>
+                    <p>პანდემიამ მსგავსი ტენდენცია კიდევ უფრო გაამწვავა, რადგან მილიონობით ადამიანი დაიღუპა COVID‑19‑ით ან მასთან დაკავშირებული გართულებებით. გარდა ამისა, მოსახლეობამ ბევრ რეგიონში შეამცირა შობადობა ეკონომიკური და ფსიქოლოგიური არასტაბილურობის გამო.</p>
+                </div>
+            </section>
+
+            <section id="age-structure" class="section fade-in">
+                <h2>ასაკობრივი და სქესობრივი სტრუქტურა</h2>
+                
+                <div class="card">
+                    <p>COVID‑19‑მა განსაკუთრებით იმოქმედა ასაკობრივ სტრუქტურაზე. ხანდაზმული მოსახლეობის შემცირება აისახა სიცოცხლის საშუალო ხანგრძლივობაზე, რომელიც ზოგ ქვეყანაში დროებით 1‑2 წლითაც კი დაეცა.</p>
+                    <p>ამ ცვლილებებმა გავლენა მოახდინა შრომის ბაზარზეც, რადგან ასაკოვანი მოსახლეობის დაქვეითებამ გაზარდა ახალგაზრდების დასაქმების წილი და პასუხისმგებლობა ეკონომიკაში.</p>
+                    <p>სქესობრივი სტრუქტურა შედარებით სტაბილური დარჩა, თუმცა ზოგ ქვეყანაში მამაკაცთა სიკვდილიანობა მაღალი იყო, რადგან ისინი უფრო ხშირად მუშაობდნენ რისკიან გარემოში (სატრანსპორტო, სამრეწველო და მომსახურების სექტორები). ეს ფაქტორი გარკვეულწილად ცვლის სქესობრივ ბალანსსაც.</p>
+                </div>
+            </section>
+
+            <section id="economy" class="section fade-in">
+                <h2>ეკონომიკური ზემოქმედება</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">↓3.1%</span>
+                        <div class="stat-label">მსოფლიო ეკონომიკა</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">მილიონობით</span>
+                        <div class="stat-label">დაკარგული სამუშაო ადგილი</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <p>პანდემიის გავლენა ეკონომიკაზე ერთ-ერთი ყველაზე საგრძნობი იყო. საზღვრების ჩაკეტვამ, საწარმოების დროებითმა გაჩერებამ და სოციალური დისტანციის მოვალეობამ მილიონობით სამუშაო ადგილი გააუქმა.</p>
+                    <p>ტურიზმი, ტრანსპორტი და მომსახურების სექტორი ყველაზე მეტად დაზარალდა. ბევრმა ადამიანმა დაკარგა შემოსავალი, გაიზარდა სიღარიბე და სოციალური უთანასწორობა.</p>
+                    <p>მეორეს მხრივ, გაიზარდა დისტანციური მუშაობა და ციფრული ეკონომიკის მნიშვნელობა. ბიზნესის ნაწილი გადავიდა ონლაინ პლატფორმებზე, რამაც ეკონომიკის ზოგიერთი სფერო გადაარჩინა.</p>
+                    <p>პანდემიის დაწყებიდან პირველი ორი წლის განმავლობაში მსოფლიო ეკონომიკა დაახლოებით 3.1%-ით შემცირდა (საერთაშორისო სავალუტო ფონდის მონაცემებით). ეს კრიზისი განსაკუთრებით მძიმედ აისახა დაბალშემოსავლიან ქვეყნებზე, სადაც მოსახლეობა დამოკიდებულია ყოველდღიურ შემოსავალზე.</p>
+                </div>
+            </section>
+
+            <section id="vaccination" class="section fade-in">
+                <h2>ვაქცინაცია და აღდგენის პროცესი</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">70%</span>
+                        <div class="stat-label">WHO-ს მიზნობრივი მაჩვენებელი</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">2022 შუა</span>
+                        <div class="stat-label">მიზნობრივი ვადა</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <p>პანდემიის წინააღმდეგ ბრძოლის მთავარი იარაღი ვაქცინაცია გახდა. ჯანდაცვის მსოფლიო ორგანიზაციის მიზანი იყო 2022 წლის შუა პერიოდისთვის მოსახლეობის მინიმუმ 70% აცრილიყო ყველა ქვეყანაში.</p>
+                    <p>ვაქცინაციამ შეამცირა სიკვდილიანობა, დააჩქარა ეკონომიკური აღდგენა და შეამსუბუქა ჯანდაცვის სისტემების დატვირთვა.</p>
+                    <p>ვაქცინაციის მაღალი მაჩვენებლის მქონე ქვეყნებში მოსახლეობის სიცოცხლის ხანგრძლივობა დაიწყო სტაბილიზება, ხოლო დაბალშემოსავლიან ქვეყნებში ვაქცინების ხელმისაწვდომობის დეფიციტმა შექმნა სერიოზული უთანასწორობა.</p>
+                    <p>ეს კიდევ ერთხელ ცხადყოფს, რომ გლობალური პრობლემების გადასაჭრელად აუცილებელია საერთაშორისო თანამშრომლობა.</p>
+                </div>
+            </section>
+
+            <section id="malthus" class="section fade-in">
+                <h2>მალთუსის თეორია და თანამედროვე რეალობა</h2>
+                
+                <div class="card">
+                    <h3>მალთუსის თეორია</h3>
+                    <p>თომას რობერტ მალთუსმა 1798 წელს ჩამოაყალიბა თეორია, რომლის მიხედვითაც მოსახლეობა იზრდება გეომეტრიული პროგრესიით, ხოლო საარსებო საშუალებები — არითმეტიკული პროგრესიით.</p>
+                    <p>შედეგად, გარკვეულ მომენტში წარმოიქმნება კრიზისი, როცა მოსახლეობის რაოდენობა აღემატება რესურსებს. ეს წერტილი ცნობილია როგორც „მალთუსისეული კატასტროფა".</p>
+                </div>
+
+                <div class="card">
+                    <h3>პანდემია და მალთუსის იდეები</h3>
+                    <p>პანდემიამ ნაწილობრივ დაადასტურა მალთუსის იდეა, რადგან ვირუსის სწრაფმა გავრცელებამ და რესურსების დეფიციტმა (სამედიცინო აღჭურვილობა, საკვები, საწოლები, ჟანგბადი) დროებით შექმნა კრიზისული მდგომარეობა.</p>
+                    <p>თუმცა მალთუსისგან განსხვავებით, თანამედროვე სამეცნიერო და ტექნოლოგიურმა პროგრესმა შეუძლო ამ პრობლემების ნაწილის გადაჭრა — ვაქცინების, ციფრული ტექნოლოგიებისა და საერთაშორისო დახმარების მეშვეობით.</p>
+                    <p>შედეგად, მალთუსის თეორია ჩვენს ეპოქაში არ არის სრულიად მართებული, თუმცა მისი ძირითადი იდეა — რესურსების შეზღუდულობა და მოსახლეობის ზრდის კონტროლი — დღემდე რჩება აქტუალური მდგრადი განვითარების კონტექსტში.</p>
+                </div>
+            </section>
+
+            <section id="conclusion" class="section fade-in">
+                <h2>დასკვნა</h2>
+                
+                <div class="card">
+                    <p>COVID‑19‑ის პანდემიამ მკვეთრად შეცვალა მსოფლიო დემოგრაფიული და ეკონომიკური სურათი. მოსახლეობის ზრდის ტემპი შემცირდა, ასაკობრივი სტრუქტურა შეიცვალა, დასაქმების ფორმებმა განიცადა რადიკალური ცვლილება, ხოლო ეკონომიკამ დროებით დაიკლო.</p>
+                    <p>ვაქცინაციამ და სამეცნიერო პროგრესმა ხელი შეუწყო სიტუაციის გაუმჯობესებას, თუმცა გლობალური უთანასწორობა კვლავ რჩება გამოწვევად.</p>
+                </div>
+
+                <div class="card">
+                    <p>მალთუსის თეორიის შუქზე პანდემია შეგვახსენებს, რომ რესურსების მართვა, სოციალური თანასწორობა და ტექნოლოგიური განვითარება ერთმანეთზე დამოკიდებულია.</p>
+                    <p>პანდემიის შემდეგი პერიოდი უნდა გახდეს ის ეტაპი, როცა ქვეყნები მოემზადებიან მომავალი კრიზისებისთვის, გააძლიერებენ ჯანდაცვის სისტემებს და გააფართოებენ საერთაშორისო თანამშრომლობას.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>მომზადებულია: ნანა კუპრეიშვილს მიერ, 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // Close mobile menu
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Active navigation highlighting
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.color = '#495057';
+                link.style.background = 'transparent';
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.style.color = '#2c5aa0';
+                    link.style.background = 'rgba(44, 90, 160, 0.1)';
+                }
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f23f96f7509cc7',t:'MTc2MDU2MjA1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
