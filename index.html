@@ -4,298 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>პანდემია და მოსახლეობის ცვლილება</title>
-    <style>
-        body {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'BPG Glaho WEB Caps', 'Sylfaen', 'DejaVu Sans', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            scroll-behavior: smooth;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        header {
-            background: linear-gradient(135deg, #ffffff 0%, #f1f3f4 100%);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 0.5rem;
-            border: none;
-            background: none;
-            z-index: 1001;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #2c5aa0;
-            margin: 3px 0;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #2c5aa0;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            gap: 2rem;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #495057;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        nav a:hover {
-            color: #2c5aa0;
-            background: rgba(44, 90, 160, 0.1);
-            transform: translateY(-2px);
-        }
-
-        nav a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s;
-        }
-
-        nav a:hover::before {
-            left: 100%;
-        }
-
-        main {
-            margin-top: 80px;
-            padding: 2rem 0;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 4rem 0;
-            background: linear-gradient(135deg, #2c5aa0 0%, #4a90e2 100%);
-            color: white;
-            margin-bottom: 3rem;
-            border-radius: 15px;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .section {
-            margin-bottom: 4rem;
-            padding: 2rem 0;
-        }
-
-        .section h2 {
-            color: #2c5aa0;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .section h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, #2c5aa0, #4a90e2);
-            border-radius: 2px;
-        }
-
-        .card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-            border-left: 4px solid #4a90e2;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-
-        .card h3 {
-            color: #2c5aa0;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .stat-card:hover {
-            border-color: #4a90e2;
-            transform: scale(1.05);
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #2c5aa0;
-            display: block;
-        }
-
-        .stat-label {
-            color: #6c757d;
-            margin-top: 0.5rem;
-        }
-
-        footer {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1a365d 100%);
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 4rem;
-        }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            nav {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: linear-gradient(135deg, #ffffff 0%, #f1f3f4 100%);
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-            }
-
-            nav.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 0;
-                width: 100%;
-                text-align: center;
-                padding: 1rem 0;
-            }
-
-            nav a {
-                display: block;
-                padding: 1rem;
-                border-bottom: 1px solid rgba(44, 90, 160, 0.1);
-            }
-
-            nav a:last-child {
-                border-bottom: none;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
@@ -315,6 +24,11 @@
                         <li><a href="#age-structure">ასაკობრივი სტრუქტურა</a></li>
                         <li><a href="#economy">ეკონომიკა</a></li>
                         <li><a href="#vaccination">ვაქცინაცია</a></li>
+                        <li><a href="#pfizer">პფაიზერი</a></li>
+                        <li><a href="#pharma-industry">ფარმაცევტული მრეწველობა</a></li>
+                        <li><a href="#vaccine-impact">ვაქცინაციის გავლენა</a></li>
+                        <li><a href="#vaccine-opposition">მოწინააღმდეგეები</a></li>
+                        <li><a href="#economic-recovery">ეკონომიკური აღდგენა</a></li>
                         <li><a href="#malthus">მალთუსის თეორია</a></li>
                         <li><a href="#conclusion">დასკვნა</a></li>
                     </ul>
@@ -415,6 +129,159 @@
                     <p>ვაქცინაციამ შეამცირა სიკვდილიანობა, დააჩქარა ეკონომიკური აღდგენა და შეამსუბუქა ჯანდაცვის სისტემების დატვირთვა.</p>
                     <p>ვაქცინაციის მაღალი მაჩვენებლის მქონე ქვეყნებში მოსახლეობის სიცოცხლის ხანგრძლივობა დაიწყო სტაბილიზება, ხოლო დაბალშემოსავლიან ქვეყნებში ვაქცინების ხელმისაწვდომობის დეფიციტმა შექმნა სერიოზული უთანასწორობა.</p>
                     <p>ეს კიდევ ერთხელ ცხადყოფს, რომ გლობალური პრობლემების გადასაჭრელად აუცილებელია საერთაშორისო თანამშრომლობა.</p>
+                </div>
+            </section>
+
+            <section id="pfizer" class="section fade-in">
+                <h2>ფარმაცევტული კომპანია „პფაიზერის" ისტორია</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">1849</span>
+                        <div class="stat-label">დაარსების წელი</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">ნიუ-იორკი</span>
+                        <div class="stat-label">დაარსების ადგილი</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">mRNA</span>
+                        <div class="stat-label">ვაქცინის ტექნოლოგია</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>კომპანიის დაარსება და ადრეული განვითარება</h3>
+                    <p>ფარმაცევტული კომპანია „პფაიზერი" (Pfizer) 1849 წელს დაარსდა ნიუ-იორკში გერმანელი ემიგრანტების მიერ და მალევე გახდა წამყვანი მოთამაშე მედიცინის სფეროში. მისი ისტორია მჭიდროდ არის დაკავშირებული გლობალურ ბრძოლასთან ინფექციური და ქრონიკული დაავადებების წინააღმდეგ.</p>
+                </div>
+
+                <div class="card">
+                    <h3>მეორე მსოფლიო ომი და პენიცილინი</h3>
+                    <p>მეორე მსოფლიო ომის დროს პფაიზერმა პენიცილინის მასობრივი წარმოებით მილიონობით სიცოცხლე გადაარჩინა. შემდგომ წლებში კომპანიამ შექმნა მრავალი ინოვაციური პრეპარატი, მათ შორის ლიპიტორი — ქოლესტერინის დასაქვეითებლად, და ვაგრა — ერექციული დისფუნქციის სამკურნალოდ.</p>
+                </div>
+
+                <div class="card">
+                    <h3>COVID-19 და mRNA ვაქცინა</h3>
+                    <p>COVID-19-ის პანდემიის დროს პფაიზერმა ბიონტექთან თანამშრომლობით შექმნა მსოფლიოში პირველი mRNA ტექნოლოგიაზე დაფუძნებული ვაქცინა, რომელმაც გადამწყვეტი როლი ითამაშა ვირუსის გავრცელების შეჩერებაში. ვაქცინა სწრაფად გავრცელდა გლობალურად და მილიონობით ადამიანს დაეხმარა.</p>
+                    <p>მოგვიანებით კომპანიამ შეიმუშავა პაქსლოვიდი — ანტივირუსული პრეპარატი, რომელიც ამცირებს ჰოსპიტალიზაციისა და სიკვდილის რისკს მაღალი რისკის მქონე პაციენტებში.</p>
+                </div>
+
+                <div class="card">
+                    <p>Pfizer-ის ისტორია ასახავს მის მუდმივ სწრაფვას ინოვაციისკენ და საზოგადოებრივი ჯანმრთელობის გაუმჯობესებისკენ. მისი წვლილი მედიცინაში და განსაკუთრებით COVID-19-ის წინააღმდეგ ბრძოლაში, ნათლად აჩვენებს, როგორ შეიძლება მეცნიერებამ შეცვალოს მსოფლიო.</p>
+                </div>
+            </section>
+
+            <section id="pharma-industry" class="section fade-in">
+                <h2>ფარმაცევტული მრეწველობის განვითარება</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">🇺🇸 აშშ</span>
+                        <div class="stat-label">ლიდერი ინოვაციებში</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">🇨🇳 ჩინეთი</span>
+                        <div class="stat-label">წარმოების ცენტრი</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">🇪🇺 ევროპა</span>
+                        <div class="stat-label">კვლევითი პოტენციალი</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>ზრდის მიზეზები</h3>
+                    <p>ფარმაცევტული მრეწველობის წარმოების ზრდა განპირობებულია გლობალური ჯანდაცვის მოთხოვნების სწრაფი ცვლილებით. მოსახლეობის ზრდა, ქრონიკული დაავადებების გავრცელება და COVID-19-ის პანდემია გახდა იმპულსი, რომელმაც მნიშვნელოვნად გაზარდა მედიკამენტებზე მოთხოვნა.</p>
+                    <p>ტექნოლოგიური პროგრესი — განსაკუთრებით ბიოტექნოლოგიაში და გენეტიკაში — კომპანიებს აძლევს საშუალებას, შექმნან უფრო ეფექტური და მიზნობრივი პრეპარატები.</p>
+                </div>
+
+                <div class="card">
+                    <h3>წამყვანი ქვეყნები და რეგიონები</h3>
+                    <p>ამ პროცესში დაწინაურდნენ ისეთი ქვეყნები, როგორებიც არიან აშშ, ჩინეთი, იაპონია, გერმანია და ბრაზილია. აშშ ლიდერობს ინოვაციებითა და გაყიდვებით, ჩინეთი კი სწრაფად ვითარდება როგორც წარმოების ცენტრი.</p>
+                    <p>ევროპული ქვეყნები გამოირჩევიან კვლევით პოტენციალით, ხოლო ბრაზილია და სხვა განვითარებადი ქვეყნები — ბაზრის გაფართოებით.</p>
+                    <p>ფარმაცევტული მრეწველობა დღეს წარმოადგენს ერთ-ერთ ყველაზე დინამიურ და სტრატეგიულ სექტორს, რომელიც არა მხოლოდ ეკონომიკურ, არამედ საზოგადოებრივ ჯანმრთელობასაც განსაზღვრავს.</p>
+                </div>
+            </section>
+
+            <section id="vaccine-impact" class="section fade-in">
+                <h2>ვაქცინაციის გავლენა პანდემიის პროცესზე</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">↓ 90%</span>
+                        <div class="stat-label">მძიმე შემთხვევები</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">↓ 85%</span>
+                        <div class="stat-label">ჰოსპიტალიზაცია</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">mRNA</span>
+                        <div class="stat-label">ახალი ტექნოლოგია</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <p>COVID-19-ის პანდემიის წინააღმდეგ ბრძოლაში ვაქცინაციამ გადამწყვეტი როლი შეასრულა. მას შემდეგ, რაც ვაქცინები ხელმისაწვდომი გახდა, მნიშვნელოვნად შემცირდა მძიმე შემთხვევების რაოდენობა, ჰოსპიტალიზაცია და სიკვდილიანობა, განსაკუთრებით მაღალი რისკის მქონე პირებში.</p>
+                    <p>ვაქცინაციამ შეამცირა ვირუსის გავრცელების სიჩქარე, რაც დაეხმარა ჯანდაცვის სისტემებს გადატვირთვის თავიდან აცილებაში. ამ პროცესმა ასევე ხელი შეუწყო ეკონომიკის აღდგენას, შეზღუდვების შემსუბუქებას და საზოგადოებრივი ცხოვრების ნორმალიზაციას.</p>
+                    <p>გარდა ამისა, mRNA ტექნოლოგიის წარმატებულმა გამოყენებამ გზა გაუხსნა სამეცნიერო პროგრესს სხვა დაავადებების წინააღმდეგ ბრძოლის მიმართულებით. ვაქცინაცია იქცა არა მხოლოდ ინდივიდუალური დაცვის საშუალებად, არამედ გლობალურ სტრატეგიად, რომელმაც მნიშვნელოვნად შეცვალა პანდემიის მიმდინარეობა.</p>
+                </div>
+            </section>
+
+            <section id="vaccine-opposition" class="section fade-in">
+                <h2>ვაქცინაციის მოწინააღმდეგეთა არგუმენტები</h2>
+                
+                <div class="card">
+                    <h3>ძირითადი არგუმენტები</h3>
+                    <p>ვაქცინაციის მოწინააღმდეგეები ხშირად ამბობენ, რომ ვაქცინა არ არის უსაფრთხო, ან რომ ბუნებრივი იმუნიტეტი ჯობია. ზოგი ფიქრობს, რომ ვაქცინა თავისუფლებას ზღუდავს.</p>
+                </div>
+
+                <div class="card">
+                    <h3>სამეცნიერო პასუხი</h3>
+                    <p>მაგრამ რეალურად, ვაქცინები კარგად არის შემოწმებული, იცავს სიცოცხლეს და ამცირებს დაავადების გავრცელებას. რაც უფრო მეტი ადამიანი აიცრება, მით უფრო სწრაფად მთავრდება პანდემია.</p>
+                    <p>ასე რომ, მათი არგუმენტები ხშირად შიშზე ან არასწორ ინფორმაციაზეა დაფუძნებული. მნიშვნელოვანია, რომ საზოგადოება ეყრდნობოდეს მეცნიერულ მტკიცებულებებს და არა დეზინფორმაციას.</p>
+                </div>
+            </section>
+
+            <section id="economic-recovery" class="section fade-in">
+                <h2>ეკონომიკური აღდგენა და მომავლის პერსპექტივები</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">🇮🇹 🇪🇸 🇨🇳</span>
+                        <div class="stat-label">ყველაზე დაზარალებული</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">🇺🇸 🇹🇭 🇬🇪</span>
+                        <div class="stat-label">ტურიზმზე დამოკიდებული</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>პანდემიის ეკონომიკური შედეგები</h3>
+                    <p>პანდემიის პერიოდში მსოფლიო ეკონომიკამ მძიმე კრიზისი განიცადა, რაც განსაკუთრებით შეეხო ისეთ დარგებს, როგორებიცაა ტურიზმი, ავიამიმოსვლა, სერვისის სფერო და მრეწველობა. მოგზაურობაზე დაწესებულმა შეზღუდვებმა გამოიწვია სასტუმროების, კაფეების, რესტორნებისა და ავიაკომპანიების დროებითი დახურვა, რის შედეგადაც მილიონობით ადამიანმა დაკარგა სამსახური.</p>
+                    <p>წარმოება ბევრ ქვეყანაში შეფერხდა, რადგან ქარხნებში ვერ ხერხდებოდა მუშაობა, ხოლო ნავთობის ფასები მკვეთრად დაეცა მოთხოვნის შემცირების გამო.</p>
+                </div>
+
+                <div class="card">
+                    <h3>საქართველოზე გავლენა</h3>
+                    <p>ამ მოვლენებმა დიდი გავლენა იქონია საქართველოზეც. პანდემიის გამო მნიშვნელოვნად შემცირდა ტურისტების რაოდენობა, რაც ქვეყნის ეკონომიკის ერთ-ერთ მთავარ საყრდენზე აისახა. ამის შედეგად ბევრი ადამიანი დროებით უმუშევარი გახდა, ლარის კურსი დოლართან მიმართებით დაეცა და ეკონომიკური აქტივობა შემცირდა.</p>
+                    <p>თუმცა ამავე დროს განვითარდა ონლაინ ვაჭრობა და დისტანციური მომსახურება, რადგან მოსახლეობა ახალ რეალობას მოერგო. სახელმწიფომ დაიწყო ფინანსური დახმარების პროგრამები მოქალაქეებისა და ბიზნესის დასახმარებლად.</p>
+                </div>
+
+                <div class="card">
+                    <h3>აღდგენის ძირითადი მიმართულებები</h3>
+                    <p><strong>ციფრული ეკონომიკის გაძლიერება</strong> — პანდემიამ აჩვენა, რამდენად მნიშვნელოვანია ონლაინ მომსახურებები, ელექტრონული კომერცია, განათლება და დისტანციური მუშაობა. მომავალშიც ეს სფეროები კიდევ უფრო გაიზრდება.</p>
+                    <p><strong>ჯანმრთელობისა და ფარმაცევტული სექტორის განვითარება</strong> — პანდემიის შემდეგ საზოგადოება უფრო მეტად აფასებს ჯანდაცვას, ამიტომ ინვესტიციები მედიცინაში, ბიოტექნოლოგიაში და მედიკამენტების წარმოებაში გაიზრდება.</p>
+                    <p><strong>ადგილობრივი წარმოებისა და სოფლის მეურნეობის გაძლიერება</strong> — ქვეყნებმა გაიაზრეს, რომ კრიზისულ პერიოდში უცხოეთზე დამოკიდებულება სარისკოა. ამიტომ ბევრი ქვეყანა ცდილობს ადგილობრივი პროდუქციის წარმოების ზრდას.</p>
+                    <p><strong>ტურიზმის აღდგენა ახალი ფორმით</strong> — პანდემიის შემდეგ ტურიზმი თანდათან აღდგება, მაგრამ ახალი უსაფრთხოების სტანდარტებითა და მდგრადი განვითარების პრინციპებით.</p>
+                </div>
+
+                <div class="card">
+                    <h3>ყველაზე დაზარალებული ქვეყნები</h3>
+                    <p>კოვიდის დროს ეკონომიკა ძალიან დაზარალდა ისეთ ქვეყნებში, როგორებიცაა:</p>
+                    <p>🇮🇹 <strong>იტალია</strong> • 🇪🇸 <strong>ესპანეთი</strong> • 🇨🇳 <strong>ჩინეთი</strong> • 🇺🇸 <strong>აშშ</strong> • 🇹🇭 <strong>ტაილანდი</strong> • 🇬🇪 <strong>საქართველო</strong></p>
+                    <p>ეს ქვეყნები ძირითადად ტურიზმზე დამოკიდებული იყო. პანდემიისას მოგზაურობა აიკრძალა, სასტუმროები და კაფეები დაიხურა, ამიტომ ქვეყნებმა შემოსავლის დიდი ნაწილი დაკარგეს.</p>
                 </div>
             </section>
 
@@ -535,5 +402,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f23f96f7509cc7',t:'MTc2MDU2MjA1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'992b96d0613295a3',t:'MTc2MTE2MzMxMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
